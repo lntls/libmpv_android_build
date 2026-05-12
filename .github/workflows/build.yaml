@@ -48,7 +48,7 @@ jobs:
         uses: montudor/action-zip@v1  
 
       - name: Setup Dart
-      - uses: dart-lang/setup-dart@v1  
+        uses: dart-lang/setup-dart@v1  
 
       - name: Output
         run: dart run ./copy.dart
