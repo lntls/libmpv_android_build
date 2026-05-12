@@ -50,8 +50,7 @@ jobs:
 
       - name: Output
         uses: dart-lang/setup-dart@v1
-        run: |
-          dart run ./copy.dart
+        run: dart run ./copy.dart
 
       - name: Output zip
         working-directory: ./output
