@@ -5,10 +5,8 @@ name: Build libmpv
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #   branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
+  release:
+    types: [created]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,7 +26,7 @@ jobs:
       - name: Install deps
         run: |
           sudo apt-get update
-          sudo apt-get install autoconf pkgconf libtool ninja-build python3-pip gperf
+          sudo apt-get install -y autoconf pkgconf libtool ninja-build python3-pip python3-jinja2 gperf nasm
           sudo pip3 install meson
 
       - name: Download sdk
@@ -46,3 +44,27 @@ jobs:
           ./buildall.sh --arch armv7l mpv
           ./buildall.sh --arch arm64 mpv
           ./buildall.sh --arch x86_64 mpv
+
+      - name: Install zip
+        uses: montudor/action-zip@v1  
+
+      - name: Output
+        uses: dart-lang/setup-dart@v1
+        run: |
+          dart run ./copy.dart
+
+      - name: Output zip
+        working-directory: ./output
+        run: |
+            zip -qq -r arm64-v8a.zip arm64-v8a  
+            zip -qq -r armeabi-v7a.zip armeabi-v7a 
+            zip -qq -r x86_64.zip x86_64
+
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        working-directory: ./output
+        tag_name: github.event.release.tag_name
+        files: *.zip
+
+      
+
