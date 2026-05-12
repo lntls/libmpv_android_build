@@ -62,7 +62,8 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v3
-        files: output/*.zip
+        with:
+          files: output/*.zip
 
       
 
