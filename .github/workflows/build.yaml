@@ -51,10 +51,11 @@ jobs:
         uses: dart-lang/setup-dart@v1  
 
       - name: Output
+        working-directory: ./buildscripts
         run: dart run ./copy.dart
 
       - name: Output zip
-        working-directory: ./output
+        working-directory: ./buildscripts/output
         run: |
             zip -qq -r arm64-v8a.zip arm64-v8a  
             zip -qq -r armeabi-v7a.zip armeabi-v7a 
@@ -63,7 +64,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          files: output/*.zip
+          files: ./buildscripts/output/*.zip
 
       
 
