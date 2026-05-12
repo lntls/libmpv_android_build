@@ -4,7 +4,6 @@ name: Build libmpv
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   release:
     types: [created]
 
@@ -48,8 +47,10 @@ jobs:
       - name: Install zip
         uses: montudor/action-zip@v1  
 
+      - name: Setup Dart
+      - uses: dart-lang/setup-dart@v1  
+
       - name: Output
-        uses: dart-lang/setup-dart@v1
         run: dart run ./copy.dart
 
       - name: Output zip
