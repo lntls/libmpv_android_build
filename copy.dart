@@ -1,7 +1,9 @@
 import 'dart:io';
 
 void copy(String arch, String name) {
-  final libsDir = Directory('${Directory.current.path}/prefix/$arch/lib');
+  final libsDir = Directory(
+    '${Directory.current.path}/buildscripts/prefix/$arch/lib',
+  );
   final outputDir = Directory('${Directory.current.path}/output/$name');
   if (outputDir.existsSync()) {
     outputDir.deleteSync(recursive: true);
