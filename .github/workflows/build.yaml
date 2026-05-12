@@ -32,20 +32,17 @@ jobs:
           sudo pip3 install meson
 
       - name: Download sdk
-        run: |
-         set -e
-         cd $GITHUB_WORKSPACE
-         ls -la buildscripts/include/
-         ls -la buildscripts/include/depinfo.sh
-         bash buildscripts/include/download-sdk.sh
+        working-directory: ./buildscripts
+        run: ./include/download-sdk.sh
 
       - name: Download deps
-        run: |
-          buildscripts/include/download-deps.sh    
+        working-directory: ./buildscripts
+        run: ./include/download-deps.sh    
 
 
       - name: Build libmpv
+        working-directory: ./buildscripts
         run: |
-          buildscripts/buildall.sh --arch armv7l mpv
-          buildscripts/buildall.sh --arch arm64 mpv
-          buildscripts/buildall.sh --arch x86_64 mpv
+          ./buildall.sh --arch armv7l mpv
+          ./buildall.sh --arch arm64 mpv
+          ./buildall.sh --arch x86_64 mpv
